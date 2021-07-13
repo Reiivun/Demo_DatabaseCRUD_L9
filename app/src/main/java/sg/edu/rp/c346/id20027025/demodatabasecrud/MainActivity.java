@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<Note> aa;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        btnRetrieve.performClick();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -32,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         btnEdit = findViewById(R.id.btnEdit);
         btnRetrieve = findViewById(R.id.btnRetrieve);
         tvDBContent = findViewById(R.id.tvContent);
-        // text view? I think they'll use it later.
         etContent = findViewById(R.id.etContent);
+        lv = findViewById(R.id.lv);
 
         al = new ArrayList<Note>();
         aa = new ArrayAdapter<Note>(this,
@@ -77,6 +84,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int
+                    position, long identity) {
+                Note data = al.get(position);
+                Intent i = new Intent(MainActivity.this,
+                        EditActivity.class);
+                i.putExtra("data", data);
+                startActivity(i);
+            }
+        });
 
     }
 }
