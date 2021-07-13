@@ -68,7 +68,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DBHelper dbh = new DBHelper(MainActivity.this);
                 al.clear();
-                al.addAll(dbh.getAllNotes());
+                //al.addAll(dbh.getAllNotes());
+
+                String filterText = etContent.getText().toString().trim();
+                if (filterText.length() == 0) {
+                    al.addAll(dbh.getAllNotes());
+                } else {
+                    al.addAll(dbh.getAllNotes(filterText));
+                }
+
                 aa.notifyDataSetChanged();
             }
         });
@@ -94,5 +102,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long identity) {
+                Note data = al.get(position);
+                Intent i = new Intent(MainActivity.this, EditActivity.class);
+                i.putExtra("data", data);
+                startActivity(i);
+            }
+        });
     }
 }
