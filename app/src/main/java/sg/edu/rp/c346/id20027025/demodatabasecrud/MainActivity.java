@@ -86,11 +86,9 @@ public class MainActivity extends AppCompatActivity {
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int
-                    position, long identity) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long identity) {
                 Note data = al.get(position);
-                Intent i = new Intent(MainActivity.this,
-                        EditActivity.class);
+                Intent i = new Intent(MainActivity.this, EditActivity.class);
                 i.putExtra("data", data);
                 startActivity(i);
             }
